@@ -20,6 +20,7 @@ parser.add_argument('--half', action='store_true', default=False)
 # ----
 exp = Experiment(__file__)
 args = exp.get_arguments(parser, show=True)
+print(args)
 device = exp.get_device()
 chrono = exp.chrono()
 try:
@@ -47,9 +48,10 @@ model = ModelAdapter(model, half=args.half)
 
 
 # ----
-train_dataset = datasets.ImageFolder(
+train_dataset = datasets.ImageNet(
     args.data,
-    transforms.Compose([
+    split="train",
+    transform = transforms.Compose([
         transforms.RandomResizedCrop(224),
         transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
